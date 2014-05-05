@@ -687,6 +687,8 @@ static int hdmi_gpio_config(int on)
 	int rc = 0;
 	static int prev_on;
 
+	pr_err("hdmi_gpio_config: enter with on=%d\n", on);
+
 	if (on == prev_on)
 		return 0;
 
@@ -709,14 +711,14 @@ static int hdmi_gpio_config(int on)
 				"HDMI_HPD", HDMI_HPD_GPIO, rc);
 			goto error3;
 		}
-		pr_debug("%s(on): success\n", __func__);
+		pr_info("%s(on): success\n", __func__);
 
 	} else {
 		gpio_free(HDMI_DDC_CLK_GPIO);
 		gpio_free(HDMI_DDC_DATA_GPIO);
 		gpio_free(HDMI_HPD_GPIO);
 
-		pr_debug("%s(off): success\n", __func__);
+		pr_info("%s(off): success\n", __func__);
 	}
 
 	prev_on = on;
@@ -756,13 +758,13 @@ static char panel_setting_2 [3] = {0xB3, 0x0A, 0x9F};
 static char display_mode1 [6] = {0xB5, 0x50, 0x20, 0x40, 0x00, 0x20};
 static char display_mode2 [8] = {0xB6, 0x00, 0x14, 0x0F, 0x16, 0x13, 0x05, 0x05};
 
-#define g_white       0x40
-#define g_mids        0x44
-#define g_black       0x76
-#define g_contrast    0x19
-#define g_brightness  0x04
-#define g_saturation  0x42
-#define g_greys       0x20
+#define g_white       0x00
+#define g_mids        0x27
+#define g_black       0x77
+#define g_contrast    0x06
+#define g_brightness  0x00
+#define g_saturation  0x02
+#define g_greys       0x00
 
 static char p_gamma_r_setting[10] = {0xD0, g_white, g_mids, g_black, 0x00, g_contrast, g_brightness, g_saturation, g_greys, 0x01};
 static char n_gamma_r_setting[10] = {0xD1, g_white, g_mids, g_black, 0x00, g_contrast, g_brightness, g_saturation, g_greys, 0x01};
